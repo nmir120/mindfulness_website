@@ -1,21 +1,47 @@
+.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+body {
+  margin: 0px;
+}
+
+.container {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+img {
+  border-style: solid;
+  border-color: black;
+}
+
 header {
   border-bottom-style: solid;
 }
 
-footer  {
-  border-top-style: solid;
+footer {
+  padding: 25px;
+  text-align: center;
+  flex-grow: 1;
+  background-color: rgb(46, 46, 46);
+  color: rgb(219, 219, 219);
+  max-height: 200px;
+  margin-top: auto;
 }
 
 header img {
   max-width: 450px;
   margin-top: 25px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
+  border-style: none;
 }
 
-
+/* drop-shadow class is used to change header image to a drop shadow version when hovered over */
 .drop-shadow {
   display: inline;
-  margin-left: 25px;
 }
 
 .drop-shadow .top {
@@ -26,41 +52,46 @@ header img {
   display: none;
 }
 
-
 .drop-shadow:hover .top {
-  display: inline-block;
+  display: inline;
 }
 
-.center {
-  display: inline-block;
+.flex-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.img-right {
+  margin: 15px 0px 15px 15px;
+  max-width: 80vh;
+  float: right;
 }
 
 h1, h3 {
   font-family: 'Comfortaa', 'Avenir', sans-serif;
 }
 
-p {
+p, .flex-article li {
   font-family: 'Avenir', sans-serif;
 }
 
 nav {
   font-family: 'Economica', 'Avenir', sans-serif;
   float: right;
-  margin-right: 50px;
-}
-
-nav ul {
-  
+  margin-right: 25px;
 }
 
 nav li {
   display: inline-block;
-  margin: 50px;
+  margin: 50px 50px 0px;
 }
 
 nav li a {
   text-decoration: none;
-  font-size: 24px;
+  font-size: 2.4vh;
 }
 
 nav li a:hover {
