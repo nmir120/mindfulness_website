@@ -1,24 +1,63 @@
-.site {
+.main-content {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
 }
 
+.app-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#welcome {
+  margin-top: 25px;
+}
+
+#medit-img {
+  max-width: 700px;
+}
+
+#app-logos {
+  max-height: 30vh;
+  border-style: none;
+}
+
 body {
   margin: 0px;
+  overflow: auto;
 }
 
 .container {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+/* .flex-article {
   margin-left: 25px;
   margin-right: 25px;
-}
+} */
 
 img {
   border-style: solid;
   border-color: black;
+  width: 100%;
+  height: auto;
+}
+
+header img {
+  max-width: 100vh;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border-style: none;
+}
+
+.img-right {
+  margin: 15px 0px 15px 15px;
 }
 
 header {
+  display: flex;
   border-bottom-style: solid;
 }
 
@@ -32,18 +71,7 @@ footer {
   margin-top: auto;
 }
 
-header img {
-  max-width: 450px;
-  margin-top: 25px;
-  margin-bottom: 25px;
-  border-style: none;
-}
-
 /* drop-shadow class is used to change header image to a drop shadow version when hovered over */
-.drop-shadow {
-  display: inline;
-}
-
 .drop-shadow .top {
   display: none;
 }
@@ -60,17 +88,10 @@ header img {
   margin-top: 15px;
   margin-bottom: 15px;
   display: flex;
-  justify-content: space-around;
   align-items: flex-start;
 }
 
-.img-right {
-  margin: 15px 0px 15px 15px;
-  max-width: 80vh;
-  float: right;
-}
-
-h1, h3 {
+h1, h2, h3 {
   font-family: 'Comfortaa', 'Avenir', sans-serif;
 }
 
@@ -80,8 +101,10 @@ p, .flex-article li {
 
 nav {
   font-family: 'Economica', 'Avenir', sans-serif;
-  float: right;
-  margin-right: 25px;
+}
+
+nav ul {
+  margin-left: 30vh;
 }
 
 nav li {
@@ -91,7 +114,8 @@ nav li {
 
 nav li a {
   text-decoration: none;
-  font-size: 2.4vh;
+  font-size: 24px;
+  color: black;
 }
 
 nav li a:hover {
