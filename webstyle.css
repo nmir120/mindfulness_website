@@ -1,14 +1,20 @@
 .article-container {
   display: inline-block;
   margin-bottom: 15px;
-  margin-left: 10vh;
-  margin-right: 10vh;
+  margin-left: 20vh;
+  margin-right: 20vh;
+}
+
+.clr-l {
+  clear: left;
+}
+.clr-r {
+  clear: right;
 }
 
 .header-container {
-  display: flex;
-  margin-left: 10vh;
-  margin-right: 10vh;
+  margin-left: 20vh;
+  margin-right: 20vh;
 }
 
 .main-content {
@@ -30,6 +36,7 @@
 
 #welcome {
   margin-top: 25px;
+  text-align: center;
 }
 
 
@@ -43,17 +50,10 @@ body {
   overflow: auto;
 }
 
-
-
 .error-container {
   margin: 50px;
   text-align: center;
 }
-
-/* .flex-article {
-  margin-left: 25px;
-  margin-right: 25px;
-} */
 
 img {
   border-style: solid;
@@ -63,7 +63,7 @@ img {
 }
 
 header img {
-  max-width: 100vh;
+  max-width: 40vh;
   margin-top: 25px;
   margin-bottom: 25px;
   border-style: none;
@@ -76,8 +76,40 @@ header img {
   max-width: 60vh;
 }
 
+.img-left {
+  margin: 0px 15px 15px 0px;
+  float: left;
+  max-width: 60vh;
+}
+
+#breath-img {
+  margin: 0px 40px 15px 0px;
+  border-style: none;
+}
+
+#mindful-img {
+  border-style: none;
+}
+
+#media-img {
+  margin: 0px 20px 10px 0px;
+  border-style: none;
+  max-width: 400px;
+}
+
+#grat-img {
+  max-width: 450px;
+}
+
+#tech-img {
+  max-width: 600px;
+}
+
+#bench-img {
+  max-width: 450px;
+}
+
 header {
-  display: flex;
   border-bottom-style: solid;
 }
 
@@ -86,12 +118,16 @@ footer {
   text-align: center;
   flex-grow: 1;
   background-color: rgb(46, 46, 46);
-  color: rgb(219, 219, 219);
+  color: rgb(185, 185, 185);
   max-height: 200px;
   margin-top: auto;
 }
 
 /* drop-shadow class is used to change header image to a drop shadow version when hovered over */
+.drop-shadow {
+  float: left;
+}
+
 .drop-shadow .top {
   display: none;
 }
@@ -121,6 +157,8 @@ p, .article-container li, .app-links {
 
 nav {
   font-family: 'Economica', 'Avenir', sans-serif;
+  float: right;
+  margin-top: 40px;
 }
 
 nav ul {
@@ -129,7 +167,8 @@ nav ul {
 
 nav li {
   display: inline-block;
-  margin: 50px 50px 0px;
+  margin-right: 40px;
+  margin-bottom: 10px;
 }
 
 nav li a {
