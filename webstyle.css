@@ -34,12 +34,6 @@
   justify-content: space-evenly;
 }
 
-#welcome {
-  margin-top: 25px;
-  text-align: center;
-}
-
-
 #app-logos {
   max-height: 30vh;
   border-style: none;
@@ -140,13 +134,6 @@ footer {
   display: inline;
 }
 
-.flex-container {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: flex-start;
-}
-
 h1, h2, h3, h4 {
   font-family: 'Comfortaa', 'Avenir', sans-serif;
 }
@@ -159,10 +146,6 @@ nav {
   font-family: 'Economica', 'Avenir', sans-serif;
   float: right;
   margin-top: 40px;
-}
-
-nav ul {
-  margin-left: 30vh;
 }
 
 nav li {
