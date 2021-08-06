@@ -1,42 +1,8 @@
-.article-container {
-  display: inline-block;
-  margin-bottom: 15px;
-  margin-left: 20vh;
-  margin-right: 20vh;
-}
-
-.clr-l {
-  clear: left;
-}
-.clr-r {
-  clear: right;
-}
-
-.header-container {
-  margin-left: 20vh;
-  margin-right: 20vh;
-}
-
+/* Containers */
 .main-content {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-}
-
-.error-img {
-  border-style: none;
-  max-width: 60%;
-}
-
-.app-links {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-#app-logos {
-  max-height: 30vh;
-  border-style: none;
 }
 
 body {
@@ -44,67 +10,14 @@ body {
   overflow: auto;
 }
 
-.error-container {
-  margin: 50px;
-  text-align: center;
-}
-
-img {
-  border-style: solid;
-  border-color: black;
-  width: 100%;
-  height: auto;
-}
-
-header img {
-  max-width: 40vh;
-  margin-top: 25px;
-  margin-bottom: 25px;
-  border-style: none;
-  
-}
-
-.img-right {
-  margin: 0px 0px 15px 15px;
-  float: right;
-  max-width: 60vh;
-}
-
-.img-left {
-  margin: 0px 15px 15px 0px;
-  float: left;
-  max-width: 60vh;
-}
-
-#breath-img {
-  margin: 0px 40px 15px 0px;
-  border-style: none;
-}
-
-#mindful-img {
-  border-style: none;
-}
-
-#media-img {
-  margin: 0px 20px 10px 0px;
-  border-style: none;
-  max-width: 400px;
-}
-
-#grat-img {
-  max-width: 450px;
-}
-
-#tech-img {
-  max-width: 600px;
-}
-
-#bench-img {
-  max-width: 450px;
-}
-
 header {
   border-bottom-style: solid;
+}
+
+/* This is used as a class as I do not want the underline border to use these margins */
+.header-container {
+  margin-left: 20vh;
+  margin-right: 20vh;
 }
 
 footer {
@@ -134,16 +47,26 @@ footer {
   display: inline;
 }
 
-h1, h2, h3, h4 {
-  font-family: 'Comfortaa', 'Avenir', sans-serif;
+.error-container {
+  margin: 50px;
+  text-align: center;
 }
 
-p, .article-container li, .app-links {
-  font-family: 'Avenir', sans-serif;
+.article-container {
+  display: inline-block;
+  margin-bottom: 15px;
+  margin-left: 20vh;
+  margin-right: 20vh;
 }
 
+.app-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+/* Navigation */
 nav {
-  font-family: 'Economica', 'Avenir', sans-serif;
   float: right;
   margin-top: 40px;
 }
@@ -158,6 +81,7 @@ nav li a {
   text-decoration: none;
   font-size: 24px;
   color: black;
+  font-family: 'Economica', 'Avenir', sans-serif;
 }
 
 nav li a:hover {
@@ -167,4 +91,89 @@ nav li a:hover {
 nav li a:visited {
   color: black;
 }
+
+/* Clear */
+.clr-l {
+  clear: left;
+}
+
+.clr-r {
+  clear: right;
+}
+
+/* Image selectors */
+img {
+  border-style: solid;
+  border-color: black;
+  width: 100%;
+  height: auto;
+}
+
+header img {
+  max-width: 40vh;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border-style: none;
+}
+
+.error-img {
+  border-style: none;
+  max-width: 60%;
+}
+
+.app-logos {
+  max-height: 30vh;
+  border-style: none;
+}
+
+.img-right {
+  margin: 0px 0px 15px 15px;
+  float: right;
+  max-width: 60vh;
+}
+
+.img-left {
+  margin: 0px 15px 15px 0px;
+  float: left;
+  max-width: 60vh;
+}
+
+/* Specific image identifiers */
+#breath-img {
+  margin: 0px 40px 15px 0px;
+  border-style: none;
+}
+
+#mindful-img {
+  border-style: none;
+}
+
+#media-img {
+  margin: 0px 20px 10px 0px;
+  border-style: none;
+  max-width: 400px;
+}
+
+#grat-img {
+  max-width: 450px;
+}
+
+#tech-img {
+  max-width: 600px;
+}
+
+#bench-img {
+  max-width: 450px;
+}
+
+/* Font setters */
+h1, h2, h3, h4 {
+  font-family: 'Comfortaa', 'Avenir', sans-serif;
+}
+
+p, li {
+  font-family: 'Avenir', sans-serif;
+}
+
+
 
