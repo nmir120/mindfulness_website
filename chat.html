@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang=”en”>
+  <head>
+    <meta charset=”utf-8”>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name=”author” content="Numan Mir">
+    <meta name=”description” content="A beginner's guide to mindfulness meditation and other mindfulness living practices">
+    <meta name=”keywords” content="mindfulness, meditation, Buddhism, mental health, stress relief">
+    <title>mind @ ease</title>
+    <link rel="stylesheet" type="text/css" href="webstyle.css">
+    <link rel="icon" href="images/favicon.png"> 
+    <link href='http://fonts.googleapis.com/css?family=Comfortaa:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Economica:400,700' rel='stylesheet' type='text/css'>
+    <script src="config.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+
+
+  <body class="main-content">
+      <header>
+      <div class="header-container">
+        <div class="drop-shadow">
+          <img class="bottom" src="images/mae3.jpg" alt="mind @ ease logo">
+          <a href="home.html"><img class="top" src="images/mae3ds.jpg" alt="mind @ ease logo"></a>
+        </div>
+      
+        <!-- Navigation menu -->
+        <nav>
+          <ul>
+            <li><a href="home.html">HOME</a></li>
+            <li><a href="one.html">MEDITATION</a></li>
+            <li><a href="two.html">MINDFUL LIVING PRACTICES</a></li>
+            <li><a href="chat.html">HAPPIFY AI BOT</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+      <div id="chat-container">
+        <div id="chat-messages"></div>
+        <div id="user-input">
+          <input type="text" id="user-message" placeholder="Type your message..." onkeydown="handleKeyDown(event)">
+          <button id="submit-btn" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+
+  </body>
+</html>
