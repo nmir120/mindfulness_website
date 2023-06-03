@@ -1,33 +1,62 @@
-// function generateResponse() {
-// 	const userInput = document.getElementById("user-input").value; // Get user input
-// 	const url = `https://api.openai.com/v1/chat/completions`;
-// 	const prompt = `
-//   Input: "At work today I was overwhelmed by a project and ended up getting nothing done."
-//   Output: "To combat feeling overwhelmed with a large task, try increasing self-awareness by verbalizing or writing down your feelings. 
-//   Create a list of what's in your control and what's not. Identify one small task you can immediately work on and focus on one thing at a time."
-//   Using the example above, fill in the Output section below, include relevant science-backed mindfulness exercises (keep it to 100 tokens max)
-//   Input: ${userInput}
-//   Output: `; // Prompt for the API
-// 	const headers = {
-// 		"Content-Type": "application/json",
-// 		"Authorization": `Bearer ${API_KEY}`,
-// 	}
-//   const data = {
-//     "model": "gpt-3.5-turbo",
-//     "messages": [{"role": "user", "content": prompt}],
-//     "max_tokens": 100,
-//     "temperature": 0.7
-//   };
-// 	axios.post(url, data, { headers })
-// 		.then(response => {
-// 			const chatResponse = response.data.choices[0].message.content; // Get the response from the API
-// 			document.getElementById("chat-output").innerHTML = chatResponse; // Display the response in the HTML page
-// 		})
-// 		.catch(error => {
-// 			console.log(error);
-// 		});
+const MAX_CONVERSATION_LENGTH = 5; // Chat history is limited to 5 messages to avoid lengthy response times
 
-// }
+let conversation = [
+  { role: 'system', content: 'You are a bot named Serenity, deeply versed in mindfulness and meditation. Your role is to provide accurate insights and thoughtful advice in these areas. Keep responses less than 50 words.' }
+];
+
+function generateResponse(userMessage) {
+  const url = `https://api.openai.com/v1/chat/completions`;
+
+  // Add the user message to the conversation
+  conversation.push({ role: 'user', content: userMessage });
+
+  // Remove the second message every 5 messages (excluding the system message)
+  if ((conversation.length - 1) % MAX_CONVERSATION_LENGTH === 0 && conversation.length > MAX_CONVERSATION_LENGTH + 1) {
+    conversation.splice(1, 1);
+  }
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${API_KEY}`,
+  };
+  const data = {
+    "model": "gpt-3.5-turbo",
+    "messages": conversation,
+    "max_tokens": 100,
+    "temperature": 0.5
+  };
+
+  return axios.post(url, data, { headers })
+    .then(response => {
+      // Add the AI response to the conversation
+      conversation.push({ role: 'assistant', content: response.data.choices[0].message.content });
+
+      // Return the AI response
+      return response.data.choices[0].message.content;
+    })
+    .catch(error => {
+      console.log(error);
+      return "Sorry, there was an error generating the response. Please try again later.";
+    });
+}
+
+const defaultMessage = `Hi, my name is Serenity, I'm an AI bot deeply versed in mindfulness and meditation, and I'm here to assist you. Pose any questions you have in these realms, and I'll draw upon a wealth of knowledge and research to offer you accurate insights and thoughtful advice.`;
+
+window.onload = function() {
+  // Send the default message if the chat is empty
+  if (isChatEmpty()) {
+    sendDefaultMessage();
+  }
+};
+
+function isChatEmpty() {
+  const chatContainer = document.getElementById('chat-messages');
+  return chatContainer.children.length === 0;
+}
+
+function sendDefaultMessage() {
+  createMessageBubble(defaultMessage, false);
+}
 
 function createMessageBubble(message, isUser) {
   const chatContainer = document.getElementById('chat-messages');
@@ -44,32 +73,49 @@ function sendMessage() {
   const userMessage = userInput.value;
   userInput.value = '';
 
-  createMessageBubble(userMessage, true);
-  createMessageBubble('Zendo is thinking...', false);
+  if (userMessage.length === 0) {
+    return;
+  }
 
-  // Call API here to send userMessage and receive response
-  // call the following function to display the API response
-  displayApiResponse('This is the response from the API...');
+  createMessageBubble(userMessage, true);
+  createThinkingMessage();
+
+  generateResponse(userMessage)
+    .then(botResponse => {
+      displayApiResponse(botResponse);
+    });
+}
+
+ // Placeholder loading message while waiting for API response
+function createThinkingMessage() {
+  const chatContainer = document.getElementById('chat-messages');
+  const thinkingMessage = document.createElement('div');
+  thinkingMessage.classList.add('thinking');
+  thinkingMessage.innerHTML = `<em>Serenity is thinking...</em>`;
+  chatContainer.appendChild(thinkingMessage);
+}
+
+function removeThinkingMessage() {
+  const thinkingMessage = document.querySelector('.thinking');
+  if (thinkingMessage) {
+    thinkingMessage.remove();
+  }
 }
 
 function displayApiResponse(response) {
-  const chatContainer = document.getElementById('chat-messages');
-  const thinkingMessage = chatContainer.lastChild;
-  thinkingMessage.innerText = response;
+  removeThinkingMessage();
+  createMessageBubble(response, false);
 }
 
 function handleKeyDown(event) {
-	if (event.key === "Enter") {
-		event.preventDefault();
-		sendMessage();
-	}
+  if (event.key === "Enter") {
+    event.preventDefault();
+    sendMessage();
+  }
 }
-
 // todo:
 // - figure out how to hide key but still use it while hosting online - ask chatgbt
-// - push
 // - make sure output doesn't get cut off by token limit - specify a character limit in the prompt instead?
-// - loading symbol as chat bot generates output (three bouncing dots?)
 // - publish/host on github pages like snake
 // - put on resume
 // v1 - dedicated page, ask bot about personal challenges. single prompt and answer, no chat. 
