@@ -1,8 +1,28 @@
-const MAX_CONVERSATION_LENGTH = 5; // Chat history is limited to 5 messages to avoid lengthy response times
+const MAX_CONVERSATION_LENGTH = 10; // Chat history is limited to 10 messages to avoid lengthy response times
+
+const defaultMessage = `Hi, my name is Serenity, I'm an AI bot deeply versed in mindfulness and meditation, and I'm here to assist you. Pose any questions you have in these realms, and I'll draw upon a wealth of knowledge and research to offer you accurate insights and thoughtful advice.`;
 
 let conversation = [
-  { role: 'system', content: 'You are a bot named Serenity, deeply versed in mindfulness and meditation. Your role is to provide accurate insights and thoughtful advice in these areas. Keep responses less than 50 words.' }
+  { role: 'assistant', content: 'You are a bot named Serenity, deeply versed in mindfulness and meditation. Your role is to provide accurate insights and thoughtful advice in these areas. Keep responses less than 50 words.' }
 ];
+
+
+function saveConversation() {
+  localStorage.setItem('conversation', JSON.stringify(conversation));
+}
+
+function displayConversation(conversation) {
+  const chatContainer = document.getElementById('chat-messages');
+  chatContainer.innerHTML = ''; // Clear existing messages
+
+  // If there's a previous conversation, display all messages (except the first system message)
+  for (let i = 1; i < conversation.length; i++) {
+    const message = conversation[i];
+    createMessageBubble(message.content, message.role === 'user');
+  }
+
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
 
 function generateResponse(userMessage) {
   const url = `https://api.openai.com/v1/chat/completions`;
@@ -10,9 +30,9 @@ function generateResponse(userMessage) {
   // Add the user message to the conversation
   conversation.push({ role: 'user', content: userMessage });
 
-  // Remove the second message every 5 messages (excluding the system message)
+  // Remove the third message every 6 messages (excluding the system and default message)
   if ((conversation.length - 1) % MAX_CONVERSATION_LENGTH === 0 && conversation.length > MAX_CONVERSATION_LENGTH + 1) {
-    conversation.splice(1, 1);
+    conversation.splice(2, 1);
   }
 
   const headers = {
@@ -40,9 +60,15 @@ function generateResponse(userMessage) {
     });
 }
 
-const defaultMessage = `Hi, my name is Serenity, I'm an AI bot deeply versed in mindfulness and meditation, and I'm here to assist you. Pose any questions you have in these realms, and I'll draw upon a wealth of knowledge and research to offer you accurate insights and thoughtful advice.`;
 
 window.onload = function() {
+  // localStorage.clear();
+  // Load conversation from localStorage if available
+  const storedConversation = localStorage.getItem('conversation');
+  if (storedConversation) {
+    conversation = JSON.parse(storedConversation);
+    displayConversation(conversation);
+  }
   // Send the default message if the chat is empty
   if (isChatEmpty()) {
     sendDefaultMessage();
@@ -55,6 +81,7 @@ function isChatEmpty() {
 }
 
 function sendDefaultMessage() {
+  conversation.push({ role: 'assistant', content: defaultMessage });
   createMessageBubble(defaultMessage, false);
 }
 
@@ -83,6 +110,7 @@ function sendMessage() {
   generateResponse(userMessage)
     .then(botResponse => {
       displayApiResponse(botResponse);
+      saveConversation();
     });
 }
 
@@ -114,6 +142,7 @@ function handleKeyDown(event) {
   }
 }
 // todo:
+// restart convo button
 // - figure out how to hide key but still use it while hosting online - ask chatgbt
 // - make sure output doesn't get cut off by token limit - specify a character limit in the prompt instead?
 // - publish/host on github pages like snake
