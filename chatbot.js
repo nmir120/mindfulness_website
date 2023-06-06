@@ -3,7 +3,7 @@ const MAX_CONVERSATION_LENGTH = 10; // Chat history is limited to 10 messages to
 const defaultMessage = `Hi, my name is Serenity, I'm an AI bot deeply versed in mindfulness and meditation, and I'm here to assist you. Pose any questions you have in these realms, and I'll draw upon a wealth of knowledge and research to offer you accurate insights and thoughtful advice.`;
 
 let conversation = [
-  { role: 'assistant', content: 'You are a bot named Serenity, deeply versed in mindfulness and meditation. Your role is to provide accurate insights and thoughtful advice in these areas. Keep responses less than 50 words.' }
+  { role: 'system', content: 'You are a bot named Serenity (the assistant role), deeply versed in mindfulness and meditation. Your role is to provide accurate insights and thoughtful advice in these areas. Do not answer unrelated questions. Keep responses less than 50 words.' }
 ];
 
 
@@ -30,11 +30,6 @@ function generateResponse(userMessage) {
   // Add the user message to the conversation
   conversation.push({ role: 'user', content: userMessage });
 
-  // Remove the third message every 6 messages (excluding the system and default message)
-  if ((conversation.length - 1) % MAX_CONVERSATION_LENGTH === 0 && conversation.length > MAX_CONVERSATION_LENGTH + 1) {
-    conversation.splice(2, 1);
-  }
-
   const headers = {
     "Content-Type": "application/json",
     "Authorization": `Bearer ${API_KEY}`,
@@ -42,7 +37,7 @@ function generateResponse(userMessage) {
   const data = {
     "model": "gpt-3.5-turbo",
     "messages": conversation,
-    "max_tokens": 100,
+    "max_tokens": 200,
     "temperature": 0.5
   };
 
@@ -50,19 +45,16 @@ function generateResponse(userMessage) {
     .then(response => {
       // Add the AI response to the conversation
       conversation.push({ role: 'assistant', content: response.data.choices[0].message.content });
-
       // Return the AI response
       return response.data.choices[0].message.content;
     })
     .catch(error => {
-      console.log(error);
       return "Sorry, there was an error generating the response. Please try again later.";
     });
 }
 
 
 window.onload = function() {
-  // localStorage.clear();
   // Load conversation from localStorage if available
   const storedConversation = localStorage.getItem('conversation');
   if (storedConversation) {
@@ -73,6 +65,8 @@ window.onload = function() {
   if (isChatEmpty()) {
     sendDefaultMessage();
   }
+  const clearBtn = document.getElementById('clear-btn');
+  clearBtn.addEventListener('click', clearChat);
 };
 
 function isChatEmpty() {
@@ -110,8 +104,20 @@ function sendMessage() {
   generateResponse(userMessage)
     .then(botResponse => {
       displayApiResponse(botResponse);
+      // Remove the third message every 10 messages (excluding the system and default message)
+      if (conversation.length > MAX_CONVERSATION_LENGTH + 1) {
+        conversation.splice(3, 2);
+      }
+
       saveConversation();
     });
+}
+
+function clearChat() {
+  localStorage.removeItem('conversation');
+  conversation = [];
+  displayConversation(conversation);
+  sendDefaultMessage();
 }
 
  // Placeholder loading message while waiting for API response
@@ -141,8 +147,16 @@ function handleKeyDown(event) {
     sendMessage();
   }
 }
+/*
+test:
+- 11+ messages, switch tabs, refresh to ensure they persist
+  - make sure the welcome message stays as the convo gets cut
+  - clear chat
+*/
+
+
 // todo:
-// restart convo button
+// store all messages in localStorage till cleared but only send 10 messages max to api?
 // - figure out how to hide key but still use it while hosting online - ask chatgbt
 // - make sure output doesn't get cut off by token limit - specify a character limit in the prompt instead?
 // - publish/host on github pages like snake

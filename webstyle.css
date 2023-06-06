@@ -268,11 +268,19 @@ html, body {
   border-radius: 20px;
 }
 
-#submit-btn {
+#submit-btn, #clear-btn {
   margin-left: 10px;
   width: auto;
   padding: 10px 15px;
   height: 40px;
   border-radius: 20px;
+}
+
+#clear-btn {
+  background-color:rgb(185, 185, 185);
+}
+
+#submit-btn {
+  background-color: rgb(255, 255, 255);
 }
 
