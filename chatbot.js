@@ -29,14 +29,16 @@ function generateResponse(userMessage) {
 
   // Add the user message to the conversation
   conversation.push({ role: 'user', content: userMessage });
-
+  // If the convo has 10+ messages, only send the API the first two (system and welcome message) and the last 8 messages
+  //  (the most relevant messages) to keep response times reasonably short 
+  const messages = conversation.length > MAX_CONVERSATION_LENGTH ? conversation.slice(0, 2).concat(conversation.slice(-8)) : conversation;
   const headers = {
     "Content-Type": "application/json",
     "Authorization": `Bearer ${API_KEY}`,
   };
   const data = {
     "model": "gpt-3.5-turbo",
-    "messages": conversation,
+    "messages": messages,
     "max_tokens": 200,
     "temperature": 0.5
   };
@@ -104,11 +106,6 @@ function sendMessage() {
   generateResponse(userMessage)
     .then(botResponse => {
       displayApiResponse(botResponse);
-      // Remove the third message every 10 messages (excluding the system and default message)
-      if (conversation.length > MAX_CONVERSATION_LENGTH + 1) {
-        conversation.splice(3, 2);
-      }
-
       saveConversation();
     });
 }
@@ -157,6 +154,8 @@ test:
 
 // todo:
 // store all messages in localStorage till cleared but only send 10 messages max to api?
+//  - auto scroll to bottom of chat stops working if you scroll up
+
 // - figure out how to hide key but still use it while hosting online - ask chatgbt
 // - make sure output doesn't get cut off by token limit - specify a character limit in the prompt instead?
 // - publish/host on github pages like snake

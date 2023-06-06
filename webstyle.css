@@ -170,7 +170,7 @@ h1, h2, h3, h4 {
   font-family: 'Comfortaa', 'Avenir', sans-serif;
 }
 
-p, li, body {
+p, li, body, button {
   font-family: 'Avenir', sans-serif;
 }
 
@@ -191,19 +191,16 @@ html, body {
   display: flex;
   flex-grow: 1;
   flex-direction: column-reverse;
-  /* padding: 20px; */
   box-sizing: border-box;
   margin-bottom: 100px;
   padding: 20px 20% 20px;
 }
-
 
 .message {
   margin-bottom: 20px;
   clear: both;
   overflow-wrap: break-word;
   padding: 10px;
-  /* display: inline-block; */
   max-width: 70%;
   opacity: 0; /* Set initial opacity to 0 */
   animation: phase-in 0.5s forwards; /* Apply animation effect */
