@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'Comfortaa';
+  src: url(https://fonts.googleapis.com/css2?family=Comfortaa&display=swap);
+}
+
+@font-face {
+  font-family: 'Economica';
+  src: url(https://fonts.googleapis.com/css2?family=Economica&display=swap);
+}
+
 /* Containers */
 .main-content {
   display: flex;
