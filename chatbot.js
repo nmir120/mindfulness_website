@@ -1,9 +1,10 @@
 const MAX_CONVERSATION_LENGTH = 10; // Chat history is limited to 10 messages to avoid lengthy response times
 
-const defaultMessage = `Hi, my name is Serenity, I'm an AI bot deeply versed in mindfulness and meditation, and I'm here to assist you. Pose any questions you have in these realms, and I'll draw upon a wealth of knowledge and research to offer you accurate insights and thoughtful advice.`;
+const systemMessage = `You are a bot named Serenity (the assistant role), deeply versed in mindfulness and meditation. Your role is to provide accurate insights and thoughtful advice in these areas. Do not answer unrelated questions. Keep responses less than 50 words.`;
+const welcomeMessage = `Hi, my name is Serenity, I'm an AI bot deeply versed in mindfulness and meditation, and I'm here to assist you. Pose any questions you have in these realms or tell me about a challenge you're facing in your life and I'll draw upon a wealth of knowledge and research to offer you accurate insights and thoughtful advice.`;
 
 let conversation = [
-  { role: 'system', content: 'You are a bot named Serenity (the assistant role), deeply versed in mindfulness and meditation. Your role is to provide accurate insights and thoughtful advice in these areas. Do not answer unrelated questions. Keep responses less than 50 words.' }
+  { role: 'system', content: systemMessage }
 ];
 
 
@@ -77,8 +78,8 @@ function isChatEmpty() {
 }
 
 function sendDefaultMessage() {
-  conversation.push({ role: 'assistant', content: defaultMessage });
-  createMessageBubble(defaultMessage, false);
+  conversation.push({ role: 'assistant', content: welcomeMessage });
+  createMessageBubble(welcomeMessage, false);
 }
 
 function createMessageBubble(message, isUser) {
@@ -112,24 +113,36 @@ function sendMessage() {
 
 function clearChat() {
   localStorage.removeItem('conversation');
-  conversation = [];
+  conversation = [{ role: 'system', content: systemMessage }];
   displayConversation(conversation);
   sendDefaultMessage();
 }
 
  // Placeholder loading message while waiting for API response
-function createThinkingMessage() {
+ function createThinkingMessage() {
   const chatContainer = document.getElementById('chat-messages');
   const thinkingMessage = document.createElement('div');
   thinkingMessage.classList.add('thinking');
   thinkingMessage.innerHTML = `<em>Serenity is thinking...</em>`;
   chatContainer.appendChild(thinkingMessage);
+
+  // Disable buttons
+  const sendButton = document.getElementById('submit-btn');
+  const clearButton = document.getElementById('clear-btn');
+  sendButton.disabled = true;
+  clearButton.disabled = true;
 }
 
 function removeThinkingMessage() {
   const thinkingMessage = document.querySelector('.thinking');
   if (thinkingMessage) {
     thinkingMessage.remove();
+
+    // Enable buttons
+    const sendButton = document.getElementById('submit-btn');
+    const clearButton = document.getElementById('clear-btn');
+    sendButton.disabled = false;
+    clearButton.disabled = false;
   }
 }
 
@@ -155,6 +168,7 @@ test:
 // todo:
 // store all messages in localStorage till cleared but only send 10 messages max to api?
 //  - auto scroll to bottom of chat stops working if you scroll up
+//  - disable send and clear as message is generated
 
 // - figure out how to hide key but still use it while hosting online - ask chatgbt
 // - make sure output doesn't get cut off by token limit - specify a character limit in the prompt instead?
