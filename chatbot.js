@@ -1,5 +1,5 @@
 const MAX_CONVERSATION_LENGTH = 10; // Chat history is limited to 10 messages to avoid lengthy response times
-
+const API_KEY = process.env.API_KEY;
 const systemMessage = `You are a bot named Serenity (the assistant role), deeply versed in mindfulness and meditation. Your role is to provide accurate insights and thoughtful advice in these areas. Do not answer unrelated questions. Keep responses less than 50 words.`;
 const welcomeMessage = `Hi, my name is Serenity, I'm an AI bot deeply versed in mindfulness and meditation, and I'm here to assist you. Pose any questions you have in these realms or tell me about a challenge you're facing in your life and I'll draw upon a wealth of knowledge and research to offer you accurate insights and thoughtful advice.`;
 
@@ -157,27 +157,3 @@ function handleKeyDown(event) {
     sendMessage();
   }
 }
-/*
-test:
-- 11+ messages, switch tabs, refresh to ensure they persist
-  - make sure the welcome message stays as the convo gets cut
-  - clear chat
-*/
-
-
-// todo:
-// store all messages in localStorage till cleared but only send 10 messages max to api?
-//  - auto scroll to bottom of chat stops working if you scroll up
-//  - disable send and clear as message is generated
-
-// - figure out how to hide key but still use it while hosting online - ask chatgbt
-// - make sure output doesn't get cut off by token limit - specify a character limit in the prompt instead?
-// - publish/host on github pages like snake
-// - put on resume
-// v1 - dedicated page, ask bot about personal challenges. single prompt and answer, no chat. 
-// v2 - dedicated page, scrollable chat, ask bot about anything re: mindfulness/ meditation
-
-// v3: instead of having a dedicated page, maybe just have a chatbot popup in bottom right of entire website
-// the chatbot can act as a general mindfulness + meditation guide. Tell the bot what it is, and keep the convo
-// on the topic of mindfulness/mediation. User can ask anything about practices, science, challenges they are facing,
-// + "click me for a random fact" button?
