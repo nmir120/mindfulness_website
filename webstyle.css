@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Comfortaa';
-  src: url(https://fonts.googleapis.com/css2?family=Comfortaa&display=swap);
+  src: url(fonts/Comfortaa-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: 'Economica';
-  src: url(https://fonts.googleapis.com/css2?family=Economica&display=swap);
+  src: url(fonts/Economica-Regular.ttf);
 }
 
 /* Containers */
