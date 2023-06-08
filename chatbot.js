@@ -35,7 +35,7 @@ function generateResponse(userMessage) {
   const messages = conversation.length > MAX_CONVERSATION_LENGTH ? conversation.slice(0, 2).concat(conversation.slice(-8)) : conversation;
   const headers = {
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${API_KEY}`,
+    "Authorization": `Bearer ${process.env.API_KEY}`,
   };
   const data = {
     "model": "gpt-3.5-turbo",
