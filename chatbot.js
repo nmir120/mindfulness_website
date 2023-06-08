@@ -1,7 +1,7 @@
 const MAX_CONVERSATION_LENGTH = 10; // Chat history is limited to 10 messages to avoid lengthy response times
-const API_KEY = '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';
 const systemMessage = `You are a bot named Serenity (the assistant role), deeply versed in mindfulness and meditation. Your role is to provide accurate insights and thoughtful advice in these areas. Do not answer unrelated questions. Keep responses less than 50 words.`;
 const welcomeMessage = `Hi, my name is Serenity, I'm an AI bot deeply versed in mindfulness and meditation, and I'm here to assist you. Pose any questions you have in these realms or tell me about a challenge you're facing in your life and I'll draw upon a wealth of knowledge and research to offer you accurate insights and thoughtful advice.`;
+const errorMessage = `Sorry, there was an error generating the response. Please try again later.`;
 
 let conversation = [
   { role: 'system', content: systemMessage }
@@ -52,7 +52,8 @@ function generateResponse(userMessage) {
       return response.data.choices[0].message.content;
     })
     .catch(error => {
-      return "Sorry, there was an error generating the response. Please try again later.";
+      conversation.push({ role: 'assistant', content: errorMessage });
+      return errorMessage;
     });
 }
 
