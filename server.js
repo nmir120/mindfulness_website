@@ -4,7 +4,7 @@ const axios = require('axios');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const API_KEY = process.env.OPENAI_API_KEY;
+const API_KEY = process.env.API_KEY;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
