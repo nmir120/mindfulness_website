@@ -1,3 +1,4 @@
-initial-draft.pdf
 .DS_Store
 config.js
+node_modules
+package-lock.json

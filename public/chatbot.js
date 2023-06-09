@@ -26,37 +26,33 @@ function displayConversation(conversation) {
 }
 
 function generateResponse(userMessage) {
-  const url = `https://api.openai.com/v1/chat/completions`;
-
+  const url = '/api/generate-response';
   // Add the user message to the conversation
   conversation.push({ role: 'user', content: userMessage });
   // If the convo has 10+ messages, only send the API the first two (system and welcome message) and the last 8 messages
   //  (the most relevant messages) to keep response times reasonably short 
   const messages = conversation.length > MAX_CONVERSATION_LENGTH ? conversation.slice(0, 2).concat(conversation.slice(-8)) : conversation;
+  console.log("convo length " + conversation.length);
+  console.log(messages);
   const headers = {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${process.env.API_KEY}`,
+    'Content-Type': 'application/json',
   };
+
   const data = {
-    "model": "gpt-3.5-turbo",
-    "messages": messages,
-    "max_tokens": 200,
-    "temperature": 0.5
+    messages: messages,
   };
 
   return axios.post(url, data, { headers })
     .then(response => {
-      // Add the AI response to the conversation
-      conversation.push({ role: 'assistant', content: response.data.choices[0].message.content });
-      // Return the AI response
-      return response.data.choices[0].message.content;
+      const botResponse = response.data.botResponse;
+      conversation.push({ role: 'assistant', content: botResponse });
+      return botResponse;
     })
     .catch(error => {
       conversation.push({ role: 'assistant', content: errorMessage });
       return errorMessage;
     });
 }
-
 
 window.onload = function() {
   // Load conversation from localStorage if available
@@ -81,6 +77,13 @@ function isChatEmpty() {
 function sendDefaultMessage() {
   conversation.push({ role: 'assistant', content: welcomeMessage });
   createMessageBubble(welcomeMessage, false);
+}
+
+function clearChat() {
+  localStorage.removeItem('conversation');
+  conversation = [{ role: 'system', content: systemMessage }];
+  displayConversation(conversation);
+  sendDefaultMessage();
 }
 
 function createMessageBubble(message, isUser) {
@@ -112,15 +115,9 @@ function sendMessage() {
     });
 }
 
-function clearChat() {
-  localStorage.removeItem('conversation');
-  conversation = [{ role: 'system', content: systemMessage }];
-  displayConversation(conversation);
-  sendDefaultMessage();
-}
 
- // Placeholder loading message while waiting for API response
- function createThinkingMessage() {
+// Placeholder loading message while waiting for API response
+function createThinkingMessage() {
   const chatContainer = document.getElementById('chat-messages');
   const thinkingMessage = document.createElement('div');
   thinkingMessage.classList.add('thinking');
