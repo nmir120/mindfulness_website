@@ -1,5 +1,5 @@
 # mindfulness_website
 
-
-Hope you enjoy my website and learn a little (or a lot) about living mindfully :)
-- Numan
+A educational website where you can learn a little (or a lot) about living mindfully :)
+Visit at: https://mindatease.herokuapp.com/
+- Numan Mir
